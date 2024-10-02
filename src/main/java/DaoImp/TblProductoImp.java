@@ -47,19 +47,25 @@ public class TblProductoImp implements IProducto{
 
 	@Override
 	public void eliminarProducto(int id) {
-		EntityManagerFactory emf= Persistence.createEntityManagerFactory("ProyectoJPAMaven");
-		EntityManager em = emf.createEntityManager();
-		try {
-			em.getTransaction().begin();
-			em.merge(id);
-			em.getTransaction().commit();
-			
-		} catch (Exception e) {
-			e.getMessage();
-		}finally {
-			em.close();
-		}
+	    EntityManagerFactory emf = Persistence.createEntityManagerFactory("ProyectoJPAMaven");
+	    EntityManager em = emf.createEntityManager();
+	    try {
+	        em.getTransaction().begin();
+	        TblProducto producto = em.find(TblProducto.class, id);
+	        if (producto != null) {
+	            em.remove(producto); // Eliminar el producto
+	        } else {
+	            System.out.println("Producto no encontrado con ID: " + id);
+	        }
+	        em.getTransaction().commit();
+	    } catch (Exception e) {
+	    	e.getMessage();
+	    } finally {
+	        em.close();
+	        emf.close(); 
+	    }
 	}
+
 
 	@Override
 	public List<TblProducto> listarProductos() {
