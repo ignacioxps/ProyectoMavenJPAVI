@@ -31,14 +31,34 @@ public class TblProductoImp implements IProducto{
 
 	@Override
 	public void actualizarProducto(TblProducto producto) {
-		// TODO Auto-generated method stub
-		
+		EntityManagerFactory emf= Persistence.createEntityManagerFactory("ProyectoJPAMaven");
+		EntityManager em = emf.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			em.merge(producto);
+			em.getTransaction().commit();
+			
+		} catch (Exception e) {
+			e.getMessage();
+		}finally {
+			em.close();
+		}
 	}
 
 	@Override
 	public void eliminarProducto(int id) {
-		// TODO Auto-generated method stub
-		
+		EntityManagerFactory emf= Persistence.createEntityManagerFactory("ProyectoJPAMaven");
+		EntityManager em = emf.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			em.merge(id);
+			em.getTransaction().commit();
+			
+		} catch (Exception e) {
+			e.getMessage();
+		}finally {
+			em.close();
+		}
 	}
 
 	@Override
